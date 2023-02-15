@@ -1,15 +1,18 @@
 import './App.css';
 import HomePage from "./pages/HomePage";
-import {useEffect, useState} from "react";
+import MovieReviewForm from "./pages/MovieReviewForm";
+import TopNavBar from "./components/topnavbar";
+import React, {useEffect, useState} from "react";
 import {
     BrowserRouter as Router,
     Routes,
     Route,
 } from "react-router-dom";
 
+
 function App() {
 
-    let [movies, setMovies] = useState(["Loading..."]);
+    let [movies, setMovies] = useState(null);
 
     useEffect(() => {
         fetch("./jsonData/movies.json")
@@ -18,15 +21,22 @@ function App() {
             .catch( error => console.log(error) );
     }, [])
 
-  return (
-      <Router>
-        <div className="App">
-            <Routes>
-                <Route path="/" element={<HomePage movies={movies} imgDir={["./imgs/"]}/>}  />
-            </Routes>
-        </div>
-      </Router>
-  );
+    if (movies === null) {
+        return <p>Loading...</p>
+    }else {
+
+        return (
+            <Router>
+                <div className="App">
+                    <TopNavBar/>
+                    <Routes>
+                        <Route path="/" element={<HomePage movies={movies}/>}/>
+                        <Route path="/submit-review" element={<MovieReviewForm movies={movies}/>}/>
+                    </Routes>
+                </div>
+            </Router>
+        );
+    }
 }
 
 export default App;
