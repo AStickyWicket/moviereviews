@@ -13,8 +13,7 @@ const HomePage = (props) => (
                         <li key={index + movie.moviePosterSrc}> <img className='img-poster' src={'./imgs/' + movie.moviePosterSrc} alt={movie.name + ' poster'}/></li>
                         <li key={index + movie.name}>Movie: {movie.name}</li>
                         <li key={index + movie.releaseDate}>Year: {movie.releaseDate}</li>
-                        <li key={index + movie.name + 'actors'}>Actors: {movie.actors.join(', ')}
-                        </li>
+                        <li key={index + movie.name + 'actors'}>Actors: {movie.actors.join(', ')}</li>
                         <li key={index + movie.rating}>Review: {movie.rating}/10</li>
                         {<Removebtn movie={props.movies} index={index}/>}
 
