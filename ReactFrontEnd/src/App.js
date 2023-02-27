@@ -15,7 +15,7 @@ function App() {
     let [movies, setMovies] = useState(null);
 
     useEffect(() => {
-        fetch("./jsonData/movies.json")
+        fetch("/movies")
             .then(response => response.json() )
             .then( setMovies)
             .catch( error => console.log(error) );
@@ -31,7 +31,7 @@ function App() {
                     <TopNavBar/>
                     <Routes>
                         <Route path="/" element={<HomePage movies={movies}/>}/>
-                        <Route path="/submit-review" element={<MovieReviewForm movies={movies}/>}/>
+                        <Route path="/submit-review" element={<MovieReviewForm movies={movies} setMovies={setMovies}/>}/>
                     </Routes>
                 </div>
             </Router>

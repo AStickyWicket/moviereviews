@@ -1,16 +1,28 @@
 import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const MovieReviewForm = (props) => {
     const [newMovie, setMovie] = useState({
         name: "", releaseDate: "", actors: "", rating: "", moviePosterSrc: "default.jpg"
 
     });
-
-    const handleSubmit = (event) => {
+    const navigate = useNavigate();
+    const handleSubmit =  (event) => {
         event.preventDefault();
         if (movieValid()) {
-            props.movies.push(newMovie);
-        }
+            fetch("/addMovies", {
+                method: "POST",
+                body: JSON.stringify(newMovie),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    props.setMovies([...props.movies, data])
+                    navigate('/');
+                })
+                .catch(error => console.log('Response '+ error));}
     }
 
     const movieValid = () => {
